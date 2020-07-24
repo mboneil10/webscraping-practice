@@ -23,7 +23,6 @@ driver = webdriver.Chrome(ChromeDriverManager().install())
 page = "https://www.amazon.com/Best-Sellers-Toys-Games/zgbs/toys-and-games/ref=zg_bs_nav_0"
 # Intialize data variables
 products = []
-
 ratings = []
 
 # "Open" the page
@@ -37,7 +36,9 @@ soup = BeautifulSoup(content, features = "html.parser")
 for data in soup.findAll('ol', attrs = { 'id':'zg-ordered-list' }):
     # Search for the data we want
     name = data.find('div', attrs={'class':'p13n-sc-truncated'})
-    rating = data.find('div', attrs={'class':'a-icon a-icon-star a-star-4-5 aok-align-top'})
+    # TODO: can't find rating
+    rating = data.find('div', attrs={'class':'a-icon-star'})
+    # TODO rename these dumb vars
     name = name.get('title')
     rating = rating.get('title')
     # Append the data we wanted to the data variables
