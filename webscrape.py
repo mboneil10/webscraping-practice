@@ -20,11 +20,12 @@ import pandas as pd
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
 driver = webdriver.Chrome(ChromeDriverManager().install())
 # This is the page we are extracting data from. The one in the example was no longer relevant.
-page = "https://www.etsy.com/c/jewelry/rings?ref=catcard-10883-472472064&explicit=1"
+page = "https://www.mass.gov/service-details/missing-persons"
 # Intialize data variables
-products = []
-prices = []
-ratings = []
+headings = []
+values = []
+
+# Add more later on.
 
 # "Open" the page
 driver.get(page)
@@ -33,17 +34,18 @@ content = driver.page_source
 soup = BeautifulSoup(content, features = "html.parser")
 
 # This code doesn't account for when we don't find the data we want
-# Data isn't found in the given example. Needed to use Etsy.com
-for data in soup.findAll('', attrs = { 'id':'zg-ordered-list' }):
-    # Search for the data we want
-    name = data.find('div', attrs={'class':'p13n-sc-truncated'})
-    name = name.get('title')
-    products = products.append(name)
+# Data isn't found in the given example. Using mass.gov now.
+# Search for the data we want
+for data in soup.findAll('tr', attrs={}):
+    heading = data.find('td', attrs={})
+    value = data.findAll('td', attrs={})[1]
+    headings.append(heading)
+    values.append(value)
 
 driver.close()
 
 # 5 *** Run the code and extract the data
 
 # 6 *** Store the data in the required format
-df = pd.DataFrame({'Product Name':products})
+df = pd.DataFrame({'Headings':headings, 'Values':values})
 df.to_csv('products.csv', index=False, encoding='utf-8')
