@@ -10,14 +10,11 @@
 # 4 *** Write the code
 # For testing on the web
 from selenium import webdriver
-# Need a mananger for the Chrome browser to work.
-from webdriver_manager.chrome import ChromeDriverManager
 # Parses HTML and XML
 from bs4 import BeautifulSoup
 # Data manipulation and analysis
 import pandas as pd
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
 driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
 # This is the page we are extracting data from
