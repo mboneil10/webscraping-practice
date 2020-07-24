@@ -10,13 +10,15 @@
 # 4 *** Write the code
 # For testing on the web
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
 # Parses HTML and XML
 from bs4 import BeautifulSoup
 # Data manipulation and analysis
 import pandas as pd
 
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(ChromeDriverManager().install())
 # This is the page we are extracting data from
 """
 page = "<a href='https://www.flipkart.com/laptops/'>https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
