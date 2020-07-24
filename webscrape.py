@@ -12,18 +12,35 @@
 from selenium import webdriver
 # Parses HTML and XML
 from beautifulsoup4 import BeautifulSoup
-#
+# Data manipulation and analysis
 import pandas as pd
 
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
 driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+# This is the page we are extracting data from
+page = "<a href="https://www.flipkart.com/laptops/">https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
 
+# Intialize data variables
 products = []
 prices = []
 ratings = []
 
-# This is the page we are extracting data from / where we "open" the page
-driver.get("<a href="https://www.flipkart.com/laptops/">https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq")
+# "Open" the page
+driver.get(page)
+
+content = driver.page_source
+soup = BeautifulSoup(content)
+
+for data in soup.findAll('a',href=True, attrs={'class':'_31qSD5'}):
+    # Search for the data we want
+    name = data.find('div', attrs={'class':'_3wU53n'})
+    price = data.find('div', attrs={'class':'_1vC4OE _2rQ-NK'})
+    rating = data.find('div', attrs={'class':'hGSR34 _2beYZw'})
+    # Append the data we wanted to the data variables
+    products.append(name.text)
+    prices.append(price.text)
+    ratings.append(rating.text)
 
 # 5 *** Run the code and extract the data
+
 # 6 *** Store the data in the required format
