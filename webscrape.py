@@ -11,7 +11,7 @@
 # For testing on the web
 from selenium import webdriver
 # Parses HTML and XML
-from beautifulsoup4 import BeautifulSoup
+from bs4 import BeautifulSoup
 # Data manipulation and analysis
 import pandas as pd
 
