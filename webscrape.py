@@ -21,7 +21,7 @@ import pandas as pd
 driver = webdriver.Chrome(ChromeDriverManager().install())
 # This is the page we are extracting data from
 
-page = "https://www.flipkart.com/laptops/~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniqBStoreParam1=val1&wid=11.productCard.PMU_V2"
+page = "https://www.flipkart.com/clothing-and-accessories/fabric/dress-material/women-dress-material/pr?sid=clo,qfi,xcx,ms4&otracker=categorytree&otracker=nmenu_sub_Women_0_Dress%20Material"
 # Intialize data variables
 products = []
 prices = []
