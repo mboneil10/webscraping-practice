@@ -18,7 +18,7 @@ import pandas as pd
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
 driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
 # This is the page we are extracting data from
-page = "<a href="https://www.flipkart.com/laptops/">https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
+page = "<a href='https://www.flipkart.com/laptops/'>https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
 
 # Intialize data variables
 products = []
