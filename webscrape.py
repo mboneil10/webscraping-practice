@@ -19,31 +19,31 @@ import pandas as pd
 
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
 driver = webdriver.Chrome(ChromeDriverManager().install())
-# This is the page we are extracting data from
-
-page = "https://www.flipkart.com/clothing-and-accessories/fabric/dress-material/women-dress-material/pr?sid=clo,qfi,xcx,ms4&otracker=categorytree&otracker=nmenu_sub_Women_0_Dress%20Material"
+# This is the page we are extracting data from. The one in the example was no longer relevant.
+page = "https://www.amazon.com/Best-Sellers-Toys-Games/zgbs/toys-and-games/ref=zg_bs_nav_0"
 # Intialize data variables
 products = []
-prices = []
+
 ratings = []
 
 # "Open" the page
 driver.get(page)
 
 content = driver.page_source
-soup = BeautifulSoup(content)
+soup = BeautifulSoup(content, features = "html.parser")
 
 # This code doesn't account for when we don't find the data we want
-for data in soup.findAll('a',href=True, attrs={'class':'_31qSD5'}):
+# Data isn't found in this example.
+for data in soup.findAll('ol', attrs = { 'id':'zg-ordered-list' }):
     # Search for the data we want
-    name = data.find('div', attrs={'class':'_3wU53n'})
-    price = data.find('div', attrs={'class':'_1vC4OE _2rQ-NK'})
-    rating = data.find('div', attrs={'class':'hGSR34 _2beYZw'})
+    name = data.find('div', attrs={'class':'p13n-sc-truncated'})
+    rating = data.find('div', attrs={'class':'a-icon a-icon-star a-star-4-5 aok-align-top'})
+    name = name.get('title')
+    rating = rating.get('title')
     # Append the data we wanted to the data variables
-    products.append(name.text)
-    prices.append(price.text)
-    ratings.append(rating.text)
-    
+    products.append(name)
+    ratings.append(rating)
+
 driver.close()
 
 # 5 *** Run the code and extract the data
