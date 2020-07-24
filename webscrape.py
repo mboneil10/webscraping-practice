@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
-driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
+driver = webdriver.Chrome()
 # This is the page we are extracting data from
 """
 page = "<a href='https://www.flipkart.com/laptops/'>https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
@@ -32,6 +32,7 @@ driver.get(page)
 content = driver.page_source
 soup = BeautifulSoup(content)
 
+# This code doesn't account for when we don't find the data we want
 for data in soup.findAll('a',href=True, attrs={'class':'_31qSD5'}):
     # Search for the data we want
     name = data.find('div', attrs={'class':'_3wU53n'})
@@ -41,6 +42,8 @@ for data in soup.findAll('a',href=True, attrs={'class':'_31qSD5'}):
     products.append(name.text)
     prices.append(price.text)
     ratings.append(rating.text)
+    
+driver.close()
 """
 
 # 5 *** Run the code and extract the data
