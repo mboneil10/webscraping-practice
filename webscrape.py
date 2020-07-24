@@ -10,14 +10,18 @@
 # 4 *** Write the code
 # For testing on the web
 from selenium import webdriver
+# Need a mananger for the Chrome browser to work.
+from webdriver_manager.chrome import ChromeDriverManager
 # Parses HTML and XML
 from bs4 import BeautifulSoup
 # Data manipulation and analysis
 import pandas as pd
 
+driver = webdriver.Chrome(ChromeDriverManager().install())
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
 driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
 # This is the page we are extracting data from
+"""
 page = "<a href='https://www.flipkart.com/laptops/'>https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
 
 # Intialize data variables
@@ -40,6 +44,7 @@ for data in soup.findAll('a',href=True, attrs={'class':'_31qSD5'}):
     products.append(name.text)
     prices.append(price.text)
     ratings.append(rating.text)
+"""
 
 # 5 *** Run the code and extract the data
 
