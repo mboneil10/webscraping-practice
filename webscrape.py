@@ -20,9 +20,8 @@ import pandas as pd
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
 driver = webdriver.Chrome(ChromeDriverManager().install())
 # This is the page we are extracting data from
-"""
-page = "<a href='https://www.flipkart.com/laptops/'>https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
 
+page = "https://www.flipkart.com/laptops/~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniqBStoreParam1=val1&wid=11.productCard.PMU_V2"
 # Intialize data variables
 products = []
 prices = []
@@ -46,7 +45,6 @@ for data in soup.findAll('a',href=True, attrs={'class':'_31qSD5'}):
     ratings.append(rating.text)
     
 driver.close()
-"""
 
 # 5 *** Run the code and extract the data
 
