@@ -10,37 +10,48 @@
 # 4 *** Write the code
 # For testing on the web
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
 # Parses HTML and XML
-from beautifulsoup4 import BeautifulSoup
+from bs4 import BeautifulSoup
 # Data manipulation and analysis
 import pandas as pd
 
 # Set the webdriver to use Chrome browser. (This really doesn't matter to me).
-driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
-# This is the page we are extracting data from
-page = "<a href='https://www.flipkart.com/laptops/'>https://www.flipkart.com/laptops/</a>~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
-
+driver = webdriver.Chrome(ChromeDriverManager().install())
+# This is the page we are extracting data from. The one in the example was no longer relevant.
+page = "https://www.mass.gov/service-details/missing-persons"
 # Intialize data variables
-products = []
-prices = []
-ratings = []
+headings = []
+values = []
+values2 = []
+count = 0
+# Add more later on.
 
 # "Open" the page
 driver.get(page)
 
 content = driver.page_source
-soup = BeautifulSoup(content)
+soup = BeautifulSoup(content, features = "html.parser")
 
-for data in soup.findAll('a',href=True, attrs={'class':'_31qSD5'}):
-    # Search for the data we want
-    name = data.find('div', attrs={'class':'_3wU53n'})
-    price = data.find('div', attrs={'class':'_1vC4OE _2rQ-NK'})
-    rating = data.find('div', attrs={'class':'hGSR34 _2beYZw'})
-    # Append the data we wanted to the data variables
-    products.append(name.text)
-    prices.append(price.text)
-    ratings.append(rating.text)
+# This code doesn't account for when we don't find the data we want
+# Data isn't found in the given example. Using mass.gov now.
+# Search for the data we want
+for data in soup.findAll('tr', attrs={}):
+    if count < 11:
+        heading = data.find('td', attrs={}).text.strip()
+        headings.append(heading)
+        value = (data.findAll('td', attrs={})[1]).text.strip()
+        values.append(value)
+    else:
+        value2 = (data.findAll('td', attrs={})[1]).text.strip()
+        values2.append(value2)
+    count = count + 1
+
+driver.close()
 
 # 5 *** Run the code and extract the data
 
 # 6 *** Store the data in the required format
+df = pd.DataFrame({'Heading':headings,'Value1':values,'Value2':values2}).T
+df.to_csv('products.csv', index=False, encoding='utf-8')
