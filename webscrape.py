@@ -24,6 +24,7 @@ page = "https://www.mass.gov/service-details/missing-persons"
 # Intialize data variables
 headings = []
 values = []
+values2 = []
 count = 0
 # Add more later on.
 
@@ -40,8 +41,11 @@ for data in soup.findAll('tr', attrs={}):
     if count < 11:
         heading = data.find('td', attrs={}).text.strip()
         headings.append(heading)
-    value = (data.findAll('td', attrs={})[1]).text.strip()
-    values.append(value)
+        value = (data.findAll('td', attrs={})[1]).text.strip()
+        values.append(value)
+    else:
+        value2 = (data.findAll('td', attrs={})[1]).text.strip()
+        values2.append(value2)
     count = count + 1
 
 driver.close()
@@ -49,5 +53,5 @@ driver.close()
 # 5 *** Run the code and extract the data
 
 # 6 *** Store the data in the required format
-df = pd.DataFrame({'Values':values})
+df = pd.DataFrame({'Heading':headings,'Value1':values,'Value2':values2}).T
 df.to_csv('products.csv', index=False, encoding='utf-8')
