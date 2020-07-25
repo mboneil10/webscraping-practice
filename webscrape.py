@@ -24,7 +24,7 @@ page = "https://www.mass.gov/service-details/missing-persons"
 # Intialize data variables
 headings = []
 values = []
-
+count = 0
 # Add more later on.
 
 # "Open" the page
@@ -37,15 +37,17 @@ soup = BeautifulSoup(content, features = "html.parser")
 # Data isn't found in the given example. Using mass.gov now.
 # Search for the data we want
 for data in soup.findAll('tr', attrs={}):
-    heading = data.find('td', attrs={})
-    value = data.findAll('td', attrs={})[1]
-    headings.append(heading)
+    if count < 11:
+        heading = data.find('td', attrs={}).text.strip()
+        headings.append(heading)
+    value = (data.findAll('td', attrs={})[1]).text.strip()
     values.append(value)
+    count = count + 1
 
 driver.close()
 
 # 5 *** Run the code and extract the data
 
 # 6 *** Store the data in the required format
-df = pd.DataFrame({'Headings':headings, 'Values':values})
+df = pd.DataFrame({'Values':values})
 df.to_csv('products.csv', index=False, encoding='utf-8')
